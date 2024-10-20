@@ -37,7 +37,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::445567079474:role/github-terraform
-          role-session-name: github_terraform_plan
+          role-session-name: github_terraform_${{ github.run_id }}
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Setup Terraform with specified version on the runner
