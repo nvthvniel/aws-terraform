@@ -99,7 +99,8 @@ jobs:
         env:
           APPLY: "terraform\n${{ steps.apply.outputs.stdout }}"
         with:
-          script: |  
+          script: |
+            const output = `#### Apply Initiated By \`${{ GITHUB_TRIGGERING_ACTOR }}\`
             <details><summary>Show Apply</summary>
   
             \`\`\`\n
