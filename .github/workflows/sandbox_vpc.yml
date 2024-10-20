@@ -60,7 +60,8 @@ jobs:
         run: terraform plan -no-color -input=false
         continue-on-error: true
       
-      - uses: actions/github-script@v7
+      - name: Terraform plan comment
+        uses: actions/github-script@v7
         if: github.event_name == 'pull_request'
         env:
           PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
@@ -83,12 +84,33 @@ jobs:
               body: output
             })
   
-      - name: Terraform Plan Status
+      - name: Terraform plan status
         if: steps.plan.outcome == 'failure'
         run: exit 1
   
-      - name: Terraform Apply
+      - name: Terraform apply
+        id: plan
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
+      
+      - name: Terraform apply comment
+        uses: actions/github-script@v7
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          APPLY: "terraform\n${{ steps.id.outputs.stdout }}"
+        with:
+          script: |  
+            <details><summary>Show Apply</summary>
+  
+            \`\`\`\n
+            ${process.env.APPLY}
+            \`\`\``;
+  
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: output
+            })
 
 
