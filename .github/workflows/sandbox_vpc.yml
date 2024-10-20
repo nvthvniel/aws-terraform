@@ -2,12 +2,12 @@ on:
   push:
     branches: [ main ]
     paths:
-    - sandbox/vpc
+    - sandbox/vpc/*
 
   pull_request:
     branches: [ main ]
     paths:
-    - sandbox/vpc
+    - sandbox/vpc/*
 
 
 env:
