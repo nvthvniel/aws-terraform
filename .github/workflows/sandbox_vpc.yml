@@ -89,7 +89,7 @@ jobs:
         run: exit 1
   
       - name: Terraform apply
-        id: plan
+        id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
       
@@ -97,7 +97,7 @@ jobs:
         uses: actions/github-script@v7
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
-          APPLY: "terraform\n${{ steps.id.outputs.stdout }}"
+          APPLY: "terraform\n${{ steps.apply.outputs.stdout }}"
         with:
           script: |  
             <details><summary>Show Apply</summary>
