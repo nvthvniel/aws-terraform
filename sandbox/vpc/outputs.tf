@@ -1,11 +1,11 @@
 output "module" {
-    value = "${path.module}"
+  value = path.module
 }
 
 output "root" {
-    value = "${path.root}"
+  value = path.root
 }
 
 output "cwd" {
-    value = "${path.cwd}"
+  value = path.cwd
 }
