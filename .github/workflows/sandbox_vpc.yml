@@ -86,24 +86,4 @@ jobs:
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false
-      
-      - name: Terraform apply comment
-        uses: actions/github-script@v7
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        env:
-          APPLY: "terraform\n${{ steps.apply.outputs.stdout }}"
-        with:
-          script: |
-            const output = `<details><summary>Show Apply</summary>
-            \`\`\`\n
-            ${process.env.APPLY}
-            \`\`\``;
-  
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: output
-            })
-
 
