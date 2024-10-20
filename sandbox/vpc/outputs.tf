@@ -1,8 +1,8 @@
-output "cwd" {
+output "module" {
     value = "${path.module}"
 }
 
-output "cwd" {
+output "root" {
     value = "${path.root}"
 }
 
