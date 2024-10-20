@@ -1,8 +1,14 @@
 on:
   push:
     branches: [ main ]
+    paths:
+    - sandbox/vpc
+
   pull_request:
     branches: [ main ]
+    paths:
+    - sandbox/vpc
+
 
 env:
   
@@ -15,6 +21,10 @@ permissions:
 jobs:
   terraform-plan:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: sandbox/vpc
 
     steps:
       - name: Git clone the repository
