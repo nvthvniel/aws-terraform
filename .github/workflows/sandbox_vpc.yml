@@ -51,6 +51,7 @@ jobs:
         run: terraform init
   
       - name: Terraform format
+        if: github.event_name == 'pull_request'
         id: fmt
         run: terraform fmt --recursive -check
       
@@ -100,9 +101,7 @@ jobs:
           APPLY: "terraform\n${{ steps.apply.outputs.stdout }}"
         with:
           script: |
-            const output = `#### Apply Initiated By $GITHUB_TRIGGERING_ACTOR
-            <details><summary>Show Apply</summary>
-  
+            const output = `<details><summary>Show Apply</summary>
             \`\`\`\n
             ${process.env.APPLY}
             \`\`\``;
