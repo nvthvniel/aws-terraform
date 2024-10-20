@@ -97,9 +97,4 @@ jobs:
       - name: Terraform apply
         id: apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-<<<<<<< HEAD
         run: terraform apply -auto-approve -input=false
-=======
-        run: terraform apply -auto-approve -input=false
-
->>>>>>> cd1ba45149bd2ce91e1322a53a6d68fe7d2da5ce
