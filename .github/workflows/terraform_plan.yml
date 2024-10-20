@@ -13,7 +13,7 @@ permissions:
       id-token: write
       contents: read
 jobs:
-  AssumeRoleAndCallIdentity:
+  terraform-plan:
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -22,9 +22,12 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::445567079474:role/github-terraform
-          role-session-name: github_test
+          role-session-name: github_terraform_plan
           aws-region: ${{ env.AWS_REGION }}
-      # Hello from AWS: WhoAmI
-      - name: Sts GetCallerIdentity
+
+      - name: terraform plan
+         uses: hashicorp/setup-terraform@v3
         run: |
-          aws sts get-caller-identity
+          terraform init -upgrade
+          terraform fmt
+          terraform plan
